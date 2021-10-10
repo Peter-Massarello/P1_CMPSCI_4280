@@ -2,9 +2,9 @@ CC = gcc
 
 CFLAGS  = -g -Wall -std=c++11 -lstdc++
  
-all: P1
+all: scanner
 
-P0: token.hpp scanner.cpp scanner.hpp testScanner.hpp testScanner.cpp main.cpp
+scanner: main.cpp scanner.cpp scanner.hpp token.hpp
 	$(CC) -o $@ $^ $(CFLAGS) 
  
 clean:
