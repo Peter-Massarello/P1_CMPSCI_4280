@@ -1,5 +1,7 @@
+#include "scanner.hpp"
+
 using namespace std;
 
-int main(){
+int scans(){
     return 0;
 }

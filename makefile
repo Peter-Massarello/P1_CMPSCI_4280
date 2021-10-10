@@ -4,9 +4,9 @@ CFLAGS  = -g -Wall -std=c++11 -lstdc++
  
 all: scanner
 
-scanner: main.cpp scanner.cpp scanner.hpp token.hpp
+scanner: token.hpp scanner.hpp scanner.cpp main.cpp
 	$(CC) -o $@ $^ $(CFLAGS) 
  
 clean:
-	rm P1 
+	rm scanner 
 	rm -r *.dSYM
