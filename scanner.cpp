@@ -3,32 +3,33 @@
 using namespace std;
 
 states FSA_TABLE[state][columns] = {
-//        a-z     A-Z     0-9     _       $       =       <       >       :       +       -       *       /       %       .       (       )       ,       {       }       ;       [       ]     WS     EOF 
-/* s1  */ {s2,    ERROR,  s3,     ERROR,  s2,     s4,     s6,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,  s1,    FINAL},
-/* s2  */ {s2,    s2,     s2,     s2,     ID,     ID,     ID,     ID,     ID,     ID,     ID,     ID,     ID,     ID,     ID,     ID,     ID,     ID,     ID,     ID,     ID,     ID,     ID,   ID,    ID},
-/* s3  */ {DIGIT, DIGIT,  s3,     DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,DIGIT, DIGIT},
-/* s4  */ {EQUAL, EQUAL,  EQUAL,  EQUAL,  EQUAL,  s5,     EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL,EQUAL, EQUAL},
-/* s5  */ {DUBEQ, DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ,DUBEQ, DUBEQ},
-/* s6  */ {LESS,  LESS,   LESS,   LESS,   LESS,   LESS,   LESS,   LESS,   LESS,   LESS,   LESS,   LESS,   LESS,   LESS,   LESS,   LESS,   LESS,   LESS,   LESS,   LESS,   LESS,   LESS,   LESS, LESS,  LESS},
-/* s7  */ {FINAL, FINAL,  TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,  TBD,   TBD},
-/* s8  */ {FINAL, FINAL,  TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,  TBD,   TBD},
-/* s9  */ {FINAL, FINAL,  TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,  TBD,   TBD},
-/* s10 */ {FINAL, FINAL,  TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,  TBD,   TBD},
-/* s11 */ {FINAL, FINAL,  TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,  TBD,   TBD},
-/* s12 */ {FINAL, FINAL,  TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,  TBD,   TBD},
-/* s13 */ {FINAL, FINAL,  TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,  TBD,   TBD},
-/* s14 */ {FINAL, FINAL,  TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,  TBD,   TBD},
-/* s15 */ {FINAL, FINAL,  TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,  TBD,   TBD},
-/* s16 */ {FINAL, FINAL,  TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,  TBD,   TBD},
-/* s17 */ {FINAL, FINAL,  TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,  TBD,   TBD},
-/* s18 */ {FINAL, FINAL,  TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,  TBD,   TBD},
-/* s19 */ {FINAL, FINAL,  TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,  TBD,   TBD},
-/* s20 */ {FINAL, FINAL,  TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,  TBD,   TBD},
-/* s21 */ {FINAL, FINAL,  TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,  TBD,   TBD},
-/* s22 */ {FINAL, FINAL,  TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,  TBD,   TBD},
-/* s23 */ {FINAL, FINAL,  TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,    TBD,  TBD,   TBD},
+//        a-z     A-Z     0-9     _       $       =       <       >       :       +       -       *       /       %       .       (       )       ,       {       }       ;       [       ]      WS     EOF    ERROR   
+/* s1  */ {s2,    ERROR,  s3,     ERROR,  s2,     s4,     s6,     s7,     s8,     s10,    s11,    s12,    s13,    s14,    s15,    s16,    s17,    s18,    s19,    s20,    s21,    s22,    s23,   s1,    FINAL, ERROR},
+/* s2  */ {s2,    s2,     s2,     s2,     ID,     ID,     ID,     ID,     ID,     ID,     ID,     ID,     ID,     ID,     ID,     ID,     ID,     ID,     ID,     ID,     ID,     ID,     ID,    ID,    ID,    ERROR},
+/* s3  */ {DIGIT, DIGIT,  s3,     DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT, DIGIT, DIGIT, ERROR},
+/* s4  */ {EQUAL, EQUAL,  EQUAL,  EQUAL,  EQUAL,  s5,     EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL, EQUAL, EQUAL, ERROR},
+/* s5  */ {DUBEQ, DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ,  DUBEQ, DUBEQ, DUBEQ, ERROR},
+/* s6  */ {LESS,  LESS,   LESS,   LESS,   LESS,   LESS,   LESS,   LESS,   LESS,   LESS,   LESS,   LESS,   LESS,   LESS,   LESS,   LESS,   LESS,   LESS,   LESS,   LESS,   LESS,   LESS,   LESS,  LESS,  LESS,  ERROR},
+/* s7  */ {GREAT, GREAT,  GREAT,  GREAT,  GREAT,  GREAT,  GREAT,  GREAT,  GREAT,  GREAT,  GREAT,  GREAT,  GREAT,  GREAT,  GREAT,  GREAT,  GREAT,  GREAT,  GREAT,  GREAT,  GREAT,  GREAT,  GREAT, GREAT, GREAT, ERROR},
+/* s8  */ {COLON, COLON,  COLON,  COLON,  COLON,  s9,     COLON,  COLON,  COLON,  COLON,  COLON,  COLON,  COLON,  COLON,  COLON,  COLON,  COLON,  COLON,  COLON,  COLON,  COLON,  COLON,  COLON, COLON, COLON, ERROR},
+/* s9  */ {COLEQ, COLEQ,  COLEQ,  COLEQ,  COLEQ,  COLEQ,  COLEQ,  COLEQ,  COLEQ,  COLEQ,  COLEQ,  COLEQ,  COLEQ,  COLEQ,  COLEQ,  COLEQ,  COLEQ,  COLEQ,  COLEQ,  COLEQ,  COLEQ,  COLEQ,  COLEQ, COLEQ, COLEQ, ERROR},
+/* s10 */ {PLUS,  PLUS,   PLUS,   PLUS,   PLUS,   PLUS,   PLUS,   PLUS,   PLUS,   PLUS,   PLUS,   PLUS,   PLUS,   PLUS,   PLUS,   PLUS,   PLUS,   PLUS,   PLUS,   PLUS,   PLUS,   PLUS,   PLUS,  PLUS,  PLUS,  ERROR},
+/* s11 */ {MINUS, MINUS,  MINUS,  MINUS,  MINUS,  MINUS,  MINUS,  MINUS,  MINUS,  MINUS,  MINUS,  MINUS,  MINUS,  MINUS,  MINUS,  MINUS,  MINUS,  MINUS,  MINUS,  MINUS,  MINUS,  MINUS,  MINUS, MINUS, MINUS, ERROR},
+/* s12 */ {MULT,  MULT,   MULT,   MULT,   MULT,   MULT,   MULT,   MULT,   MULT,   MULT,   MULT,   MULT,   MULT,   MULT,   MULT,   MULT,   MULT,   MULT,   MULT,   MULT,   MULT,   MULT,   MULT,  MULT,  MULT,  ERROR},
+/* s13 */ {DIVID, DIVID,  DIVID,  DIVID,  DIVID,  DIVID,  DIVID,  DIVID,  DIVID,  DIVID,  DIVID,  DIVID,  DIVID,  DIVID,  DIVID,  DIVID,  DIVID,  DIVID,  DIVID,  DIVID,  DIVID,  DIVID,  DIVID, DIVID, DIVID, ERROR},
+/* s14 */ {MODU,  MODU,   MODU,   MODU,   MODU,   MODU,   MODU,   MODU,   MODU,   MODU,   MODU,   MODU,   MODU,   MODU,   MODU,   MODU,   MODU,   MODU,   MODU,   MODU,   MODU,   MODU,   MODU,  MODU,  MODU,  ERROR},
+/* s15 */ {DECI,  DECI,   DECI,   DECI,   DECI,   DECI,   DECI,   DECI,   DECI,   DECI,   DECI,   DECI,   DECI,   DECI,   DECI,   DECI,   DECI,   DECI,   DECI,   DECI,   DECI,   DECI,   DECI,  DECI,  DECI,  ERROR},
+/* s16 */ {LPAR,  LPAR,   LPAR,   LPAR,   LPAR,   LPAR,   LPAR,   LPAR,   LPAR,   LPAR,   LPAR,   LPAR,   LPAR,   LPAR,   LPAR,   LPAR,   LPAR,   LPAR,   LPAR,   LPAR,   LPAR,   LPAR,   LPAR,  LPAR,  LPAR,  ERROR},
+/* s17 */ {RPAR,  RPAR,   RPAR,   RPAR,   RPAR,   RPAR,   RPAR,   RPAR,   RPAR,   RPAR,   RPAR,   RPAR,   RPAR,   RPAR,   RPAR,   RPAR,   RPAR,   RPAR,   RPAR,   RPAR,   RPAR,   RPAR,   RPAR,  RPAR,  RPAR,  ERROR},
+/* s18 */ {COMMA, COMMA,  COMMA,  COMMA,  COMMA,  COMMA,  COMMA,  COMMA,  COMMA,  COMMA,  COMMA,  COMMA,  COMMA,  COMMA,  COMMA,  COMMA,  COMMA,  COMMA,  COMMA,  COMMA,  COMMA,  COMMA,  COMMA, COMMA, COMMA, ERROR},
+/* s19 */ {LBRAC, LBRAC,  LBRAC,  LBRAC,  LBRAC,  LBRAC,  LBRAC,  LBRAC,  LBRAC,  LBRAC,  LBRAC,  LBRAC,  LBRAC,  LBRAC,  LBRAC,  LBRAC,  LBRAC,  LBRAC,  LBRAC,  LBRAC,  LBRAC,  LBRAC,  LBRAC, LBRAC, LBRAC, ERROR},
+/* s20 */ {RBRAC, RBRAC,  RBRAC,  RBRAC,  RBRAC,  RBRAC,  RBRAC,  RBRAC,  RBRAC,  RBRAC,  RBRAC,  RBRAC,  RBRAC,  RBRAC,  RBRAC,  RBRAC,  RBRAC,  RBRAC,  RBRAC,  RBRAC,  RBRAC,  RBRAC,  RBRAC, RBRAC, RBRAC, ERROR},
+/* s21 */ {SEMI,  SEMI,   SEMI,   SEMI,   SEMI,   SEMI,   SEMI,   SEMI,   SEMI,   SEMI,   SEMI,   SEMI,   SEMI,   SEMI,   SEMI,   SEMI,   SEMI,   SEMI,   SEMI,   SEMI,   SEMI,   SEMI,   SEMI,  SEMI,  SEMI,  ERROR},
+/* s22 */ {LBRAK, LBRAK,  LBRAK,  LBRAK,  LBRAK,  LBRAK,  LBRAK,  LBRAK,  LBRAK,  LBRAK,  LBRAK,  LBRAK,  LBRAK,  LBRAK,  LBRAK,  LBRAK,  LBRAK,  LBRAK,  LBRAK,  LBRAK,  LBRAK,  LBRAK,  LBRAK, LBRAK, LBRAK, ERROR},
+/* s23 */ {RBRAK, RBRAK,  RBRAK,  RBRAK,  RBRAK,  RBRAK,  RBRAK,  RBRAK,  RBRAK,  RBRAK,  RBRAK,  RBRAK,  RBRAK,  RBRAK,  RBRAK,  RBRAK,  RBRAK,  RBRAK,  RBRAK,  RBRAK,  RBRAK,  RBRAK,  RBRAK, RBRAK, RBRAK, ERROR},
 };
 
+// Map for characters to column numbers for FSA Table
 map<char, int> columnMap = {
     {'a', 0},
     {'A', 1},
@@ -58,15 +59,35 @@ map<char, int> columnMap = {
     {'\0',24}
 };
 
+// Map of final state value to Token type
 map<int, string> tokenTypes = {
-    {2, "Digit_Token"},
-    {3, "=_Token"},
-    {4, "==_Token"},
-    {5, "<_Token"}
+    {2, "Digit Token"},
+    {3, "= Token"},
+    {4, "== Token"},
+    {5, "< Token"},
+    {6, "> Token"},
+    {7, ": Token"},
+    {8, ":= Token"},
+    {9, "+ Token"},
+    {10, "- Token"},
+    {11, "* Token"},
+    {12, "/ Token"},
+    {13, "% Token"},
+    {14, ". Token"},
+    {15, "( Token"},
+    {16, ") Token"},
+    {17, ", Token"},
+    {18, "{ Token"},
+    {19, "} Token"},
+    {20, "; Token"},
+    {21, "[ Token"},
+    {22, "] Token"}
 };
 
+// Set of keywords 
 set<string> keyWords = {"start", "stop", "loop", "while", "for", "label", "exit", "listen", "talk", "program", "if", "then", "assign", "declare", "jump", "else"};
 
+// Data structure used to contain data needed for Tokens
 struct DriverData{
     int currentLineCount;
     int currentCharCount;
@@ -80,12 +101,7 @@ struct DriverData{
     }
 };
 
-void printVector(vector<string> vector){
-    for (int i = 0; i < vector.size(); i++){
-        cout << vector.at(i) << endl;
-    }
-}
-
+// Get next characters from a line
 char getNextChar(string line, DriverData* data){
     char nextChar = line[data->charIndex];
 
@@ -97,23 +113,33 @@ char getNextChar(string line, DriverData* data){
     }
 }
 
+// Get the next column from column map given a character.
 int getNextIndex(char nextChar){
+    // Three if statements used to simplify final map lookup
     if (islower(nextChar))
         nextChar = 'a';
     if (isupper(nextChar))
         nextChar = 'A';
     if (isdigit(nextChar))
         nextChar = '1';
+
+    // If char is there then return its value otherwise return the invalid char column
+    if (columnMap.find(nextChar) != columnMap.end()){
+        return columnMap[nextChar];
+    } else {
+        return 25;
+    }
     
-    return columnMap[nextChar];
 }
 
-void errorCall(DriverData* data){
-    cout << "Scanner has encountered error at line " << data->currentLineCount << ", char " << data->currentCharCount << endl;
+// Error call function which returns the line it was on and the character that created the error
+void errorCall(DriverData* data, char nextChar){
+    cout << "SCANNER ERROR: Scanner has encountered error at line " << data->currentLineCount << ", Error Character " << nextChar << endl;
     exit(0);
 }
 
-Token* generateIDToken(string tokenValue, string type, DriverData* data){
+// Given token data from drive, generated ID token
+Token* generateToken(string tokenValue, string type, DriverData* data){
     Token* generatedToken = new Token("", "", 0, 0);
 
     generatedToken->token = tokenValue;
@@ -124,19 +150,7 @@ Token* generateIDToken(string tokenValue, string type, DriverData* data){
     return generatedToken;
 }
 
-Token* generateOtherToken(string tokenValue, int state, DriverData* data){
-    Token* generatedToken = new Token("", "", 0, 0);
-
-    cout << "In generate with " << state << endl;
-
-    generatedToken->token = tokenValue;
-    generatedToken->tokenType = tokenTypes.at(state);
-    generatedToken->charNum = data->currentCharCount;
-    generatedToken->lineNum = data->currentLineCount;
-
-    return generatedToken;
-}
-
+// Main function called from driver which builds a vector of tokens from each line
 vector<Token*> buildTokenFromLine(string line, DriverData* data){
     Token* currentToken;
     vector<Token*> tokenList;
@@ -144,75 +158,90 @@ vector<Token*> buildTokenFromLine(string line, DriverData* data){
     states nextState;
     string tokenValue = "";
 
+    // Erases comments from each line
+    line.erase(line.begin() + line.find_first_of("&"), line.begin() + line.find_last_of("&"));
+    line.erase(remove(line.begin(), line.end(), '&'), line.end());
+
+    // Inits nextChar and nextIndex
     char nextChar = getNextChar(line, data);
     int nextIndex = getNextIndex(nextChar);
     nextState = FSA_TABLE[currentState][nextIndex];
     
-    while (currentState != FINAL || nextChar != '\0') {
-        data->currentCharCount += 1;
-        cout << "next State is " << nextState << endl;
-        cout << "current state is " << currentState << endl;
-        cout << "next char is " << nextChar << endl;
-        cout << "next index found is " << nextIndex << endl;
+    // While current state is not over final or not reached end of line
+    while (currentState < FINAL || nextChar != '\0') {
+        // If ERROR state is found, print error and exit
         if (nextState == ERROR)
-            errorCall(data);
+            errorCall(data, nextChar);
+        //  If FINAL state is found then run logic to create Token
         if (nextState > FINAL){
+            // If nextState is ID, must figure out if ID is a KeyWord Token or not
             if (nextState == ID){
                 if (keyWords.find(tokenValue) != keyWords.end()){
-                    currentToken = generateIDToken(tokenValue, "KeyWord_Token", data);
+                    currentToken = generateToken(tokenValue, "KeyWord Token", data);
 
                     tokenList.push_back(currentToken);
                 } else {
-                    currentToken = generateIDToken(tokenValue, "ID_Token", data);
+                    currentToken = generateToken(tokenValue, "ID Token", data);
 
                     tokenList.push_back(currentToken);
                 }
-            } else {
-                currentToken = generateOtherToken(tokenValue, currentState, data);
+            } else { // If nextState is any other final state, generate Token with given data.
+                currentToken = generateToken(tokenValue, tokenTypes.at(currentState), data);
 
                 tokenList.push_back(currentToken);
             }
-                currentState = s1;
-                tokenValue = "";
-                nextState = FSA_TABLE[currentState][nextIndex];
+            // reset values for next Token
+            currentState = s1;
+            tokenValue = "";
+            nextState = FSA_TABLE[currentState][nextIndex];
         }
         else {
+            // Set currentState to nextState and set up data for next token
             currentState = nextState;
             if (nextChar != ' ') tokenValue.push_back(nextChar);
             nextChar = getNextChar(line, data);
             nextIndex = getNextIndex(nextChar);
             nextState = FSA_TABLE[currentState][nextIndex];
+            data->currentCharCount += 1;
         }
     }
 
     return tokenList;
 }
 
+// Print out all token data
+void printTokens(vector<Token*> tokens){
+    for (int i = 0; i < tokens.size(); i++){
+        cout << "Token " << i+1 << " {'" << tokens.at(i)->token << "', " << tokens.at(i)->tokenType << ", line # " << tokens.at(i)->lineNum  << ", character # " << tokens.at(i)->charNum << "}" << endl;
+    }
+}
+
+// Frees all tokens
+void freeTokenVector(vector<Token*> tokens){
+    for (int i = 0; i < tokens.size(); i++){
+        delete(tokens.at(i));
+    }
+}
+
+// Main driver function which goes through each line taken from file
 vector<Token*> driverFunction(vector<string> lines){
     vector<Token*> tokens;
     vector<Token*> tempTokensList;
-    states state = s1; // initial state
-    states nextState;
-    DriverData* data = new DriverData(0,0,0);
+    DriverData* data = new DriverData(1,0,0);
 
     for (int i = 0; i < lines.size(); i++){
+        tempTokensList = buildTokenFromLine(lines.at(i), data); // Builds a token vector from a line
 
-        tempTokensList = buildTokenFromLine(lines.at(i), data);
+        tokens.insert(tokens.end(), tempTokensList.begin(), tempTokensList.end()); // attaches created tokenList to the final token vector
 
-        tokens.insert(tokens.end(), tempTokensList.begin(), tempTokensList.end());
-
+        // Reset data object after each iteration
         data->charIndex = 0;
         data->currentCharCount = 0;
         data->currentLineCount += 1;
     }
 
-    delete data;
-    for (int i = 0; i < tokens.size(); i++){
-        cout << "token Name " << tokens.at(i)->token << endl;
-        cout << "token Type " << tokens.at(i)->tokenType << endl;
-        cout << "token line " << tokens.at(i)->lineNum << endl;
-        cout << "token char " << tokens.at(i)->charNum << endl;
-    }
+    delete data; // free data
+    printTokens(tokens); // print Tokens
     return tokens;
 }
 
@@ -261,22 +290,20 @@ vector<string> openFile(string fileName){
     return wordList;
 }
 
+// Creates tokenVector from keyboard input
 vector<Token*> createTokenVector(){
     vector<Token*> tokens;
     vector<string> lines = readFromKeyBoard();
-    
-    printVector(lines);
 
     tokens = driverFunction(lines);
 
     return tokens;
 }
 
+// Creates token vector from file input
 vector<Token*> createTokenVector(string fileName){
     vector<Token*> tokens;
     vector<string> lines = openFile(fileName);
-
-    printVector(lines);
 
     tokens = driverFunction(lines);
 

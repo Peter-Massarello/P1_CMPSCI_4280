@@ -11,5 +11,6 @@ int main(int argc, char** argv){
         tokens = createTokenVector(argv[1]);
     } else cout << "ERROR: Too many args given, existing...\n";
 
+    freeTokenVector(tokens);
     return 0;
 }
