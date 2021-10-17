@@ -18,6 +18,13 @@ struct Token {
     string tokenType;
     int lineNum;
     int charNum;
+
+    Token(string tokenName, string type, int line, int charNumber){
+        token = tokenName;
+        tokenType = type;
+        lineNum = line;
+        charNum = charNumber;
+    };
 };
 
 #endif

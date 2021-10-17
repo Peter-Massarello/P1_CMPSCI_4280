@@ -1,5 +1,17 @@
 {
     "files.associations": {
-        "iostream": "cpp"
-    }
+        "ostream": "cpp",
+        "memory": "cpp",
+        "utility": "cpp",
+        "array": "cpp",
+        "iterator": "cpp",
+        "string": "cpp",
+        "string_view": "cpp",
+        "vector": "cpp",
+        "iostream": "cpp",
+        "__tree": "cpp",
+        "bitset": "cpp",
+        "set": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
 }

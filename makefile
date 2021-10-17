@@ -1,10 +1,10 @@
 CC = gcc
 
-CFLAGS  = -g -Wall -std=c++11 -lstdc++
+CFLAGS = -g -std=c++11 -lstdc++
  
 all: scanner
 
-scanner: token.hpp scanner.hpp scanner.cpp main.cpp
+scanner: main.cpp token.hpp scanner.hpp scanner.cpp
 	$(CC) -o $@ $^ $(CFLAGS) 
  
 clean:
