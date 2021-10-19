@@ -23,3 +23,6 @@
 # Notes:
     - Instructions given said that all input would be clean and deal with only alphanumeric characters. So there is no validation on reading other symbols.
     - A test file for the optional argument is supplied but if the grader wants to they can use their own.
+    - I could not figure out how to get multiline comments to work, only single line comments so any multiline comments created like
+      && this is a multiline comment
+      and then the end&& will not work on my program.
