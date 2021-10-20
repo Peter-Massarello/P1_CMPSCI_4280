@@ -294,6 +294,23 @@ vector<Token*> driverFunction(vector<string> lines){
     return tokens;
 }
 
+string cleanLine(string line, int commentCount) {
+    if (inComment && commentCount == 2){ // Now need to be out of comment
+        line.erase(line.begin(), line.begin() + line.find_first_of("&"));
+        line.erase(remove(line.begin(), line.end(), '&'), line.end());
+        inComment = false;
+    } else if (commentCount == 4){ // if single line comment then remove
+        line.erase(line.begin() + line.find_first_of("&"), line.begin() + line.find_last_of("&"));
+        line.erase(remove(line.begin(), line.end(), '&'), line.end());
+    } else if (commentCount == 2) { // if multiline begin comment
+        inComment = true;
+        line.erase(line.begin() + line.find_first_of("&"), line.end());
+        line.erase(remove(line.begin(), line.end(), '&'), line.end());
+    } 
+
+    return line;
+}
+
 // Reads from keyboard and returns a vector of all strings given
 vector<string> readFromKeyBoard(){
     string line;
@@ -302,18 +319,7 @@ vector<string> readFromKeyBoard(){
     {
         int commentCount = count(line.begin(), line.end(), '&');
 
-        if (inComment && commentCount == 2){ // Now need to be out of comment
-            line.erase(line.begin(), line.begin() + line.find_first_of("&"));
-            line.erase(remove(line.begin(), line.end(), '&'), line.end());
-            inComment = false;
-        } else if (commentCount == 4){ // if single line comment then remove
-            line.erase(line.begin() + line.find_first_of("&"), line.begin() + line.find_last_of("&"));
-            line.erase(remove(line.begin(), line.end(), '&'), line.end());
-        } else if (commentCount == 2) { // if multiline begin comment
-            inComment = true;
-            line.erase(line.begin() + line.find_first_of("&"), line.end());
-            line.erase(remove(line.begin(), line.end(), '&'), line.end());
-        } 
+        line = cleanLine(line, commentCount);
         
         if (!line.empty()) // if line wasnt fully erased then add
             wordList.push_back(line);
@@ -330,19 +336,8 @@ vector<string> readFromFile(ifstream &file){
     {   
         int commentCount = count(line.begin(), line.end(), '&');
 
-        if (inComment && commentCount == 2){ // Now need to be out of comment
-            line.erase(line.begin(), line.begin() + line.find_first_of("&"));
-            line.erase(remove(line.begin(), line.end(), '&'), line.end());
-            inComment = false;
-        } else if (commentCount == 4){ // if single line comment then remove
-            line.erase(line.begin() + line.find_first_of("&"), line.begin() + line.find_last_of("&"));
-            line.erase(remove(line.begin(), line.end(), '&'), line.end());
-        } else if (commentCount == 2) { // if multiline begin comment
-            inComment = true;
-            line.erase(line.begin() + line.find_first_of("&"), line.end());
-            line.erase(remove(line.begin(), line.end(), '&'), line.end());
-        } 
-        
+        line = cleanLine(line, commentCount);
+
         if (!line.empty()) // if line wasnt fully erased then add
             wordList.push_back(line);
     }
