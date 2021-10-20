@@ -4,7 +4,7 @@ using namespace std;
 
 states FSA_TABLE[state][columns] = {
 //        a-z     A-Z     0-9     _       $       =       <       >       :       +       -       *       /       %       .       (       )       ,       {       }       ;       [       ]      WS     EOF    ERROR   
-/* s1  */ {s2,    ERROR,  s3,     ERROR,  s2,     s4,     s6,     s7,     s8,     s10,    s11,    s12,    s13,    s14,    s15,    s16,    s17,    s18,    s19,    s20,    s21,    s22,    s23,   s1,    FINAL, ERROR},
+/* s1  */ {s2,    ERROR,  s3,     ERROR,  s2,     s4,     s6,     s7,     s8,     s10,    s11,    s12,    s13,    s14,    s15,    s16,    s17,    s18,    s19,    s20,    s21,    s22,    s23,   s1,    FINAL,    ERROR},
 /* s2  */ {s2,    s2,     s2,     s2,     ID,     ID,     ID,     ID,     ID,     ID,     ID,     ID,     ID,     ID,     ID,     ID,     ID,     ID,     ID,     ID,     ID,     ID,     ID,    ID,    ID,    ERROR},
 /* s3  */ {DIGIT, DIGIT,  s3,     DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT,  DIGIT, DIGIT, DIGIT, ERROR},
 /* s4  */ {EQUAL, EQUAL,  EQUAL,  EQUAL,  EQUAL,  s5,     EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL,  EQUAL, EQUAL, EQUAL, ERROR},
@@ -176,6 +176,9 @@ char getNextChar(string line, DriverData* data){
 
 // Get the next column from column map given a character.
 int getNextIndex(char nextChar){
+    if (nextChar == EOF){
+        cout << "EOF FOUND" << endl;
+    }
     // If char is there then return its value otherwise return the invalid char column
     if (columnMap.find(nextChar) != columnMap.end()){
         return columnMap[nextChar];
@@ -288,6 +291,8 @@ vector<Token*> driverFunction(vector<string> lines){
         data->currentCharCount = 0;
         data->currentLineCount += 1;
     }
+    Token* eofToken = generateToken("", "EOF Token", data);
+    tokens.push_back(eofToken);
 
     delete data; // free data
     printTokens(tokens); // print Tokens
