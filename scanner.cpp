@@ -176,14 +176,6 @@ char getNextChar(string line, DriverData* data){
 
 // Get the next column from column map given a character.
 int getNextIndex(char nextChar){
-    // Three if statements used to simplify final map lookup
-    if (islower(nextChar))
-        nextChar = 'a';
-    if (isupper(nextChar))
-        nextChar = 'A';
-    if (isdigit(nextChar))
-        nextChar = '1';
-
     // If char is there then return its value otherwise return the invalid char column
     if (columnMap.find(nextChar) != columnMap.end()){
         return columnMap[nextChar];
@@ -308,7 +300,23 @@ vector<string> readFromKeyBoard(){
     vector<string> wordList;
     while (getline(cin, line)) // read input until none are left in stdin
     {
-        wordList.push_back(line);
+        int commentCount = count(line.begin(), line.end(), '&');
+
+        if (inComment && commentCount == 2){ // Now need to be out of comment
+            line.erase(line.begin(), line.begin() + line.find_first_of("&"));
+            line.erase(remove(line.begin(), line.end(), '&'), line.end());
+            inComment = false;
+        } else if (commentCount == 4){ // if single line comment then remove
+            line.erase(line.begin() + line.find_first_of("&"), line.begin() + line.find_last_of("&"));
+            line.erase(remove(line.begin(), line.end(), '&'), line.end());
+        } else if (commentCount == 2) { // if multiline begin comment
+            inComment = true;
+            line.erase(line.begin() + line.find_first_of("&"), line.end());
+            line.erase(remove(line.begin(), line.end(), '&'), line.end());
+        } 
+        
+        if (!line.empty()) // if line wasnt fully erased then add
+            wordList.push_back(line);
     }
     
     return wordList;
