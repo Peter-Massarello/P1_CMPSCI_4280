@@ -146,6 +146,8 @@ map<int, string> tokenTypes = {
 // Set of keywords 
 set<string> keyWords = {"start", "stop", "loop", "while", "for", "label", "exit", "listen", "talk", "program", "if", "then", "assign", "declare", "jump", "else"};
 
+bool inComment = false;
+
 // Data structure used to contain data needed for Tokens
 struct DriverData{
     int currentLineCount;
@@ -217,15 +219,11 @@ vector<Token*> buildTokenFromLine(string line, DriverData* data){
     states nextState;
     string tokenValue = "";
 
-    // Erases comments from each line
-    line.erase(line.begin() + line.find_first_of("&"), line.begin() + line.find_last_of("&"));
-    line.erase(remove(line.begin(), line.end(), '&'), line.end());
-
     // Inits nextChar and nextIndex
     char nextChar = getNextChar(line, data);
     int nextIndex = getNextIndex(nextChar);
     nextState = FSA_TABLE[currentState][nextIndex];
-    
+
     // While current state is not over final or not reached end of line
     while (currentState < FINAL || nextChar != '\0') {
         // If ERROR state is found, print error and exit
@@ -322,7 +320,23 @@ vector<string> readFromFile(ifstream &file){
     vector<string> wordList;
     while (getline(file, line)) // Read from file until no lines are left
     {   
-        wordList.push_back(line);
+        int commentCount = count(line.begin(), line.end(), '&');
+
+        if (inComment && commentCount == 2){ // Now need to be out of comment
+            line.erase(line.begin(), line.begin() + line.find_first_of("&"));
+            line.erase(remove(line.begin(), line.end(), '&'), line.end());
+            inComment = false;
+        } else if (commentCount == 4){ // if single line comment then remove
+            line.erase(line.begin() + line.find_first_of("&"), line.begin() + line.find_last_of("&"));
+            line.erase(remove(line.begin(), line.end(), '&'), line.end());
+        } else if (commentCount == 2) { // if multiline begin comment
+            inComment = true;
+            line.erase(line.begin() + line.find_first_of("&"), line.end());
+            line.erase(remove(line.begin(), line.end(), '&'), line.end());
+        } 
+        
+        if (!line.empty()) // if line wasnt fully erased then add
+            wordList.push_back(line);
     }
 
     return wordList;
