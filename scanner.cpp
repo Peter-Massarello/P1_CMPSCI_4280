@@ -261,7 +261,7 @@ vector<Token*> buildTokenFromLine(string line, DriverData* data){
 // Print out all token data
 void printTokens(vector<Token*> tokens){
     for (int i = 0; i < tokens.size(); i++){
-        cout << "Token " << i+1 << " {'" << tokens.at(i)->token << "', " << tokens.at(i)->tokenType << ", line # " << tokens.at(i)->lineNum  << ", character # " << tokens.at(i)->charNum << "}" << endl;
+        cout << "Token " << i+1 << " {'" << tokens.at(i)->token << "', " << tokens.at(i)->tokenType << ", line # " << tokens.at(i)->lineNum << "}" << endl;
     }
 }
 
